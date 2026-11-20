@@ -33,7 +33,7 @@
     "@fluentui/react-icons": "^2.0.341",
     "@lezer/highlight": "^1.2.3",
     "@noble/hashes": "^2.4.0",
-    "@pi/plugin-sdk": "^0.1.0",
+    "@pi/plugin-sdk": "npm:@weiqun789/plugin-sdk@^0.1.0",
     "@tiptap/core": "3.31.0",
     "@tiptap/extension-bold": "3.31.0",
     "@tiptap/extension-code": "3.31.0",
