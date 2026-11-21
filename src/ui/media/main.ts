@@ -442,7 +442,7 @@ function ensureStyles(): void {
   el.id = 'mv-css';
   el.textContent = `
 .mv { height: 100%; display: flex; flex-direction: column; background: hsl(var(--background, 0 0% 100%)); color: hsl(var(--foreground, 222.2 84% 4.9%)); font: 13px/1.6 -apple-system, "PingFang SC", sans-serif; }
-.mv-head { display: flex; align-items: baseline; gap: 10px; padding: 10px 16px; border-bottom: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); }
+.mv-head { display: flex; align-items: baseline; gap: 10px; padding: 10px 16px; border-bottom: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); }
 .mv-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mv-meta { color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%)); font-size: 11px; flex: none; }
 .mv-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
@@ -457,8 +457,8 @@ function ensureStyles(): void {
 .mv-img.mv-ready { opacity: 1; }
 .mv-pannable { cursor: grab; }
 .mv-dragging { cursor: grabbing; }
-.mv-controls { flex: none; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; border-top: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); background: hsl(var(--card, 0 0% 100%)); }
-.mv-btn { font: inherit; font-size: 12px; color: hsl(var(--foreground, 222.2 84% 4.9%)); background: hsl(var(--background, 0 0% 100%)); border: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 3px 10px; cursor: pointer; }
+.mv-controls { flex: none; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; border-top: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); background: hsl(var(--card, 0 0% 100%)); }
+.mv-btn { font: inherit; font-size: 12px; color: hsl(var(--foreground, 222.2 84% 4.9%)); background: hsl(var(--background, 0 0% 100%)); border: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 3px 10px; cursor: pointer; }
 .mv-btn:hover { background: hsl(var(--muted, 210 40% 96.1%)); }
 .mv-zoom { min-width: 52px; text-align: center; font-size: 11px; color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%)); }
 

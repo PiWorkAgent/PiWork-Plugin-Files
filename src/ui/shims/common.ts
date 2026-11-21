@@ -128,6 +128,36 @@ export const signals = {
 };
 
 /**
+ * GenOffice design tokens whose names also appear in the host's shadcn token
+ * set — but with a different value format. The host sends HSL triplets
+ * (`--accent: 0 0% 9%`); GenOffice defines full colors (`--accent: #c43e1c`,
+ * `--border: #e3e6ea`). Writing the triplet over them makes every
+ * `var(--accent)` / `var(--border)` use invalid, which is what blanked the
+ * slides ribbon's File button and its active/hover tab colors.
+ */
+const GENOFFICE_OWNED_TOKENS = new Set(['--accent', '--border']);
+
+/**
+ * Apply host theme tokens without corrupting GenOffice's design tokens.
+ *
+ * Every token is mirrored under `--pi-*` for the plugin's own chrome (tabs
+ * bar, empty state, …). Legacy names still carry the host value, except the
+ * ones GenOffice owns — for those the inline value is REMOVED (the injected
+ * host SDK applies the raw names first) so the design system's value wins.
+ */
+export function applyHostTokens(tokens: Record<string, string>): void {
+  const root = document.documentElement;
+  for (const [name, value] of Object.entries(tokens)) {
+    root.style.setProperty(`--pi-${name.slice(2)}`, value);
+    if (GENOFFICE_OWNED_TOKENS.has(name)) {
+      root.style.removeProperty(name);
+    } else {
+      root.style.setProperty(name, value);
+    }
+  }
+}
+
+/**
  * Theme tokens the host streams into every panel → `data-theme` for GenOffice.
  *
  * The host pushes tokens via the preload bridge; that is the only signal. An
@@ -148,11 +178,7 @@ export function installThemeBridge(): void {
   const applyTokens = (tokens?: Record<string, string>) => {
     // Write the tokens before reading: the bridge hands them to every
     // subscriber, but the SDK that normally writes them may not have run yet.
-    if (tokens) {
-      for (const [name, value] of Object.entries(tokens)) {
-        document.documentElement.style.setProperty(name, value);
-      }
-    }
+    if (tokens) applyHostTokens(tokens);
     apply(read());
   };
   applyTokens();

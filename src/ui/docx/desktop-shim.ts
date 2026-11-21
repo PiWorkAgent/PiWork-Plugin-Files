@@ -56,7 +56,7 @@ declare global {
   }
 }
 
-import { reloadForOtherFormat } from '../shims/common';
+import { applyHostTokens, reloadForOtherFormat } from '../shims/common';
 
 const PLUGIN_ID = 'com.pi.files';
 
@@ -170,11 +170,7 @@ function installThemeBridge(): void {
   const applyTokens = (tokens?: Record<string, string>) => {
     // The bridge now fans tokens out to several subscribers, so this panel
     // writes them itself rather than assuming the SDK already did.
-    if (tokens) {
-      for (const [name, value] of Object.entries(tokens)) {
-        document.documentElement.style.setProperty(name, value);
-      }
-    }
+    if (tokens) applyHostTokens(tokens);
     apply(read());
   };
   applyTokens();

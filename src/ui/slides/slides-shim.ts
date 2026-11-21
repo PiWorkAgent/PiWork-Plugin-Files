@@ -219,7 +219,7 @@ function showExternalChangeBanner(editor: SlideEditor): void {
     'gap:12px',
     'padding:10px 14px',
     'border-radius:10px',
-    'border:1px solid hsl(var(--border, 214 32% 91%))',
+    'border:1px solid hsl(var(--pi-border, 214 32% 91%))',
     'background:hsl(var(--card, 0 0% 100%))',
     'color:hsl(var(--foreground, 222.2 84% 4.9%))',
     'font:12px/1.4 var(--font-sans, -apple-system, "PingFang SC", sans-serif)',
@@ -235,13 +235,13 @@ function showExternalChangeBanner(editor: SlideEditor): void {
     b.type = 'button';
     b.textContent = label;
     b.style.cssText = [
-      'border:1px solid hsl(var(--border, 214 32% 91%))',
+      'border:1px solid hsl(var(--pi-border, 214 32% 91%))',
       'border-radius:6px',
       'padding:4px 10px',
       'font:inherit',
       'cursor:pointer',
       'white-space:nowrap',
-      primary ? 'background:hsl(var(--accent, 210 40% 96%));color:hsl(var(--accent-foreground, 222 47% 11%))' : 'background:transparent;color:inherit',
+      primary ? 'background:hsl(var(--pi-accent, 210 40% 96%));color:hsl(var(--pi-accent-foreground, 222 47% 11%))' : 'background:transparent;color:inherit',
     ].join(';');
     b.addEventListener('click', onClick);
     return b;

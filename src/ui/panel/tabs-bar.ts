@@ -31,7 +31,7 @@ const CSS = `
   padding: 2px 4px 0;
   overflow-x: auto;
   background: hsl(var(--background, 222 19% 7%));
-  border-bottom: 1px solid hsl(var(--border, 217 19% 27%));
+  border-bottom: 1px solid hsl(var(--pi-border, 217 19% 27%));
   user-select: none;
 }
 #${stripId} .pi-file-tab {
@@ -53,11 +53,11 @@ const CSS = `
   text-overflow: ellipsis;
 }
 #${stripId} .pi-file-tab:hover {
-  background: hsl(var(--accent, 217 33% 24%) / 0.5);
+  background: hsl(var(--pi-accent, 217 33% 24%) / 0.5);
 }
 #${stripId} .pi-file-tab.active {
-  background: hsl(var(--accent, 217 33% 24%));
-  color: hsl(var(--accent-foreground, 210 40% 96%));
+  background: hsl(var(--pi-accent, 217 33% 24%));
+  color: hsl(var(--pi-accent-foreground, 210 40% 96%));
 }
 #${stripId} .pi-file-tab .pi-file-tab-close {
   flex: none;
@@ -79,7 +79,7 @@ const CSS = `
 }
 #${stripId} .pi-file-tab .pi-file-tab-close:hover {
   opacity: 1;
-  background: hsl(var(--accent-foreground, 210 40% 96%) / 0.15);
+  background: hsl(var(--pi-accent-foreground, 210 40% 96%) / 0.15);
 }
 `;
 
