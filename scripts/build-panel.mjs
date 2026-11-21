@@ -21,17 +21,18 @@
  *     turns each stylesheet into a module that appends a <style> on first
  *     evaluation.
  *
- *  3. **Font URLs are rewritten to root-absolute.** Inlined CSS resolves
+ *  3. **Font URLs are rewritten to origin-absolute.** Inlined CSS resolves
  *     `url(...)` against the DOCUMENT, not the stylesheet's original location,
- *     so `url('./Caladea-Bold.ttf')` would 404. Rewriting to `/fonts/...` makes
- *     it independent of where the CSS ends up — `/` is the plugin origin root
- *     under pi-plugin://.
+ *     so `url('./Caladea-Bold.ttf')` would 404. Rewriting to the fonts' served
+ *     location (`/ui-dist/panel/fonts/...`, see FONT_URL_BASE) makes it
+ *     independent of where the CSS ends up — `/` is the plugin origin root
+ *     under pi-plugin://, and that root is not where the fonts live.
  *
  * Run from the plugin root:  node scripts/build-panel.mjs
  */
 import { build } from 'esbuild';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs';
-import { dirname, extname, join, resolve } from 'node:path';
+import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -39,6 +40,17 @@ const ROOT = resolve(HERE, '..');
 const VENDOR = join(ROOT, 'vendor', 'genoffice');
 const DOCS = join(VENDOR, 'apps', 'docs', 'src', 'renderer');
 const OUT = join(ROOT, 'ui-dist', 'panel');
+
+/**
+ * Origin-absolute URL prefix the fonts are served at.
+ *
+ * The host serves a plugin's files from the plugin ROOT, so a root-absolute
+ * `/fonts/...` asks for `<plugin>/fonts/...` — where nothing is copied, and
+ * every font request 404s (spreadsheets then fall back to system fonts and
+ * lose Calibri's metrics). The fonts live beside the panel; the URL has to
+ * point there: `/ui-dist/panel/fonts/...`.
+ */
+const FONT_URL_BASE = `/${relative(ROOT, OUT).replace(/\\/g, '/')}/fonts`;
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
@@ -257,10 +269,11 @@ const cssInject = {
       // Two shapes appear in the vendored CSS: relative (`./Caladea-Bold.ttf`,
       // resolved against the stylesheet) and the Vite alias
       // (`@genoffice/ui/fonts/Carlito-Regular.ttf`, resolved by Vite). Both
-      // become root-absolute, which is correct from wherever the CSS lands.
+      // become origin-absolute (see FONT_URL_BASE), which is correct from
+      // wherever the CSS lands.
       css = css
-        .replace(/url\(\s*(['"]?)\.\/([^'")]+)\1\s*\)/g, (_m, _q, f) => `url('/fonts/${f}')`)
-        .replace(/url\(\s*(['"]?)@genoffice\/ui\/fonts\/([^'")]+)\1\s*\)/g, (_m, _q, f) => `url('/fonts/${f}')`);
+        .replace(/url\(\s*(['"]?)\.\/([^'")]+)\1\s*\)/g, (_m, _q, f) => `url('${FONT_URL_BASE}/${f}')`)
+        .replace(/url\(\s*(['"]?)@genoffice\/ui\/fonts\/([^'")]+)\1\s*\)/g, (_m, _q, f) => `url('${FONT_URL_BASE}/${f}')`);
       return {
         loader: 'js',
         resolveDir: dirname(args.path),
@@ -359,8 +372,8 @@ const result = await build({
   plugins: [aiPanelSwap, shimSwap, urlAsset, genofficeResolver, rawText, cssInject, nodeBuiltins, parseOffThreadInline],
 });
 
-// Fonts: the layout-fidelity payload. Served at /fonts/* so the rewritten
-// url()s resolve.
+// Fonts: the layout-fidelity payload. Copied beside the panel, at
+// FONT_URL_BASE, so the rewritten url()s resolve.
 const fontSources = [join(DOCS, 'fonts'), join(VENDOR, 'packages', 'ui', 'src', 'fonts')];
 const fontsDst = join(OUT, 'fonts');
 mkdirSync(fontsDst, { recursive: true });
