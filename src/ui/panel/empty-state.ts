@@ -50,7 +50,7 @@ const EMPTY_CSS = `
     gap: 6px;
     margin-top: 2px;
     padding: 6px 14px;
-    border: 1px solid hsl(var(--border, 214 32% 91%));
+    border: 1px solid hsl(var(--pi-border, 214 32% 91%));
     border-radius: 7px;
     background: hsl(var(--card, 0 0% 100%));
     color: inherit;
@@ -59,8 +59,8 @@ const EMPTY_CSS = `
     cursor: pointer;
   }
   .fi-pick:hover:not(:disabled) {
-    background: hsl(var(--accent, 210 40% 96%));
-    color: hsl(var(--accent-foreground, 222 47% 11%));
+    background: hsl(var(--pi-accent, 210 40% 96%));
+    color: hsl(var(--pi-accent-foreground, 222 47% 11%));
   }
   .fi-pick:disabled {
     opacity: 0.55;
@@ -72,7 +72,7 @@ const EMPTY_CSS = `
     max-height: 48vh;
     overflow: auto;
     padding: 4px;
-    border: 1px solid hsl(var(--border, 214 32% 91%));
+    border: 1px solid hsl(var(--pi-border, 214 32% 91%));
     border-radius: 8px;
     background: hsl(var(--card, 0 0% 100%));
     text-align: left;
@@ -95,8 +95,8 @@ const EMPTY_CSS = `
   .fi-row.dir { cursor: pointer; }
   .fi-row.file.previewable { cursor: pointer; }
   .fi-row:hover:not(.muted) {
-    background: hsl(var(--accent, 210 40% 96%));
-    color: hsl(var(--accent-foreground, 222 47% 11%));
+    background: hsl(var(--pi-accent, 210 40% 96%));
+    color: hsl(var(--pi-accent-foreground, 222 47% 11%));
   }
   .fi-row.muted { opacity: 0.45; }
   .fi-twisty {

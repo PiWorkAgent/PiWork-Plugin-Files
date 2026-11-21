@@ -262,10 +262,10 @@ function ensureStyles(): void {
   el.id = 'tx-css';
   el.textContent = `
 .tx { height: 100%; display: flex; flex-direction: column; background: hsl(var(--background, 0 0% 100%)); color: hsl(var(--foreground, 222.2 84% 4.9%)); font: 13px/1.6 -apple-system, "PingFang SC", sans-serif; }
-.tx-head { display: flex; align-items: center; gap: 10px; padding: 8px 12px 8px 16px; border-bottom: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); }
+.tx-head { display: flex; align-items: center; gap: 10px; padding: 8px 12px 8px 16px; border-bottom: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); }
 .tx-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tx-meta { color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%)); font-size: 11px; flex: none; }
-.tx-wrap-btn { margin-left: auto; flex: none; font: inherit; font-size: 11px; color: hsl(var(--foreground, 222.2 84% 4.9%)); background: hsl(var(--background, 0 0% 100%)); border: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
+.tx-wrap-btn { margin-left: auto; flex: none; font: inherit; font-size: 11px; color: hsl(var(--foreground, 222.2 84% 4.9%)); background: hsl(var(--background, 0 0% 100%)); border: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
 .tx-wrap-btn:hover { background: hsl(var(--muted, 210 40% 96.1%)); }
 .tx-body { flex: 1; min-height: 0; overflow: auto; }
 .tx-code { font: 12px/19px ui-monospace, "SF Mono", Menlo, monospace; padding: 8px 0 40px; }
@@ -274,16 +274,16 @@ function ensureStyles(): void {
 .tx-lc { flex: 1; min-width: 0; padding-right: 16px; white-space: pre-wrap; word-break: break-word; tab-size: 4; }
 .tx-nowrap .tx-code { width: max-content; min-width: 100%; }
 .tx-nowrap .tx-lc { white-space: pre; word-break: normal; }
-.tx-note { font-size: 12px; color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%)); background: hsl(var(--muted, 210 40% 96.1%)); border: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 8px 12px; margin: 12px 16px; }
+.tx-note { font-size: 12px; color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%)); background: hsl(var(--muted, 210 40% 96.1%)); border: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 8px 12px; margin: 12px 16px; }
 .tx-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 60px 20px; color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%)); }
 .tx-state-title { font-size: 15px; color: hsl(var(--foreground, 222.2 84% 4.9%)); }
 .tx-state-detail { font-size: 12px; max-width: 90%; text-align: center; word-break: break-word; }
 .tx-error .tx-state-detail { color: var(--err, #f87171); }
-.tx-spin { width: 22px; height: 22px; border: 2px solid hsl(var(--border, 214.3 31.8% 91.4%)); border-top-color: hsl(var(--primary, 222.2 47.4% 11.2%)); border-radius: 50%; animation: tx-spin .8s linear infinite; }
+.tx-spin { width: 22px; height: 22px; border: 2px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); border-top-color: hsl(var(--primary, 222.2 47.4% 11.2%)); border-radius: 50%; animation: tx-spin .8s linear infinite; }
 @keyframes tx-spin { to { transform: rotate(360deg); } }
 /* selection → chat box: the plugin's own UI; the host only provides chat.send */
-.sel-box { position: fixed; z-index: 50; display: flex; gap: 6px; min-width: 320px; background: hsl(var(--card, 0 0% 100%)); color: hsl(var(--card-foreground, 222.2 84% 4.9%)); border: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); border-radius: 8px; padding: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
-.sel-box .sel-input { flex: 1; min-width: 0; margin: 0; font: inherit; color: inherit; background: hsl(var(--background, 0 0% 100%)); border: 1px solid hsl(var(--border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 4px 8px; }
+.sel-box { position: fixed; z-index: 50; display: flex; gap: 6px; min-width: 320px; background: hsl(var(--card, 0 0% 100%)); color: hsl(var(--card-foreground, 222.2 84% 4.9%)); border: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); border-radius: 8px; padding: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+.sel-box .sel-input { flex: 1; min-width: 0; margin: 0; font: inherit; color: inherit; background: hsl(var(--background, 0 0% 100%)); border: 1px solid hsl(var(--pi-border, 214.3 31.8% 91.4%)); border-radius: 6px; padding: 4px 8px; }
 .sel-box .sel-input:focus { outline: none; border-color: hsl(var(--ring, 222.2 84% 4.9%)); }
 .sel-box .sel-go { flex: none; font: inherit; color: hsl(var(--primary-foreground, 210 40% 98%)); background: hsl(var(--primary, 222.2 47.4% 11.2%)); border: 0; border-radius: 6px; padding: 4px 12px; cursor: pointer; }
 `;
