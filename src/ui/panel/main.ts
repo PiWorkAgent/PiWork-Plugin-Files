@@ -110,6 +110,16 @@ function awaitRender(timeoutMs: number): Promise<unknown> {
 }
 
 /**
+ * How long a fresh tab trusts an empty `state.get` before drawing the empty
+ * state. The pull is issued from the module body, i.e. BEFORE the host replays
+ * `panel.mounted` (that happens on did-finish-load); the mount push that tells
+ * the backend which file this tab owns therefore always trails the pull by a
+ * few milliseconds. Long enough to cover that hop, short enough that a viewer
+ * genuinely opened empty (from the rail) is not left blank.
+ */
+const MOUNT_PUSH_GRACE_MS = 1000;
+
+/**
  * Boot pull: ask the backend what it is showing, in the same envelope a
  * `ui.render` carries. Faster than waiting on the mounted push, and the only
  * source when the panel reloaded without unmounting — the host pushes
@@ -118,8 +128,27 @@ function awaitRender(timeoutMs: number): Promise<unknown> {
  */
 async function pullState(): Promise<unknown> {
   try {
-    const state = (await window.piSDK?.request('state.get')) as { path?: string } | null;
-    if (state && typeof state === 'object') return { event: 'ui.render', data: state };
+    const state = (await window.piSDK?.request('state.get')) as {
+      path?: string;
+      tabs?: unknown;
+      activePath?: unknown;
+    } | null;
+    if (state && typeof state === 'object') {
+      const open = Array.isArray(state.tabs)
+        ? state.tabs.length > 0
+        : Boolean(state.activePath || state.path);
+      if (open) return { event: 'ui.render', data: state };
+      // An empty pull on a FRESH tab does not mean "the user opened an empty
+      // viewer": it means this backend has not received this tab's
+      // `panel.mounted` yet (see above). Taking it at face value used to mount
+      // the empty state, receive the mount push a moment later and reload —
+      // a whole wasted page boot on every first open of a file. Wait for that
+      // push instead. A panel that really is empty gets one too
+      // (`onPanelMounted` always renders, path or not), so this resolves
+      // either way; the timeout only covers a host that never pushes.
+      const pushed = await awaitRender(MOUNT_PUSH_GRACE_MS);
+      return pushed ?? { event: 'ui.render', data: state };
+    }
   } catch {
     /* fall through to the push */
   }
