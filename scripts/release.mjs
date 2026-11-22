@@ -8,8 +8,8 @@
  *   index.json           one MarketEntry: version, absolute zip URL, sha256
  *
  * The zip contains the RUNTIME PAYLOAD only — manifest, dist/, ui-dist/, ui/,
- * assets/, docs/, PLUGIN.md. src/ tests/ scripts/ vendor/ node_modules/ are
- * build inputs and never ship.
+ * assets/ (README screenshots excluded), docs/, PLUGIN.md. src/ tests/ scripts/
+ * vendor/ node_modules/ are build inputs and never ship.
  *
  * The zip URL is ABSOLUTE and pinned to the release tag
  * (`https://github.com/<owner>/<repo>/releases/download/v<version>/<zip>`), so
@@ -36,6 +36,8 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 /** Build inputs, never read at runtime. */
 const EXCLUDED_DIRS = new Set(['node_modules', 'src', 'tests', 'scripts', 'vendor', 'dist-packages']);
 const EXCLUDED_FILES = /^(\.DS_Store|package-lock\.json|pnpm-lock\.yaml|tsconfig.*\.json|.*\.tsbuildinfo)$/;
+/** README-only assets: kept in git, never shipped in the runtime zip. */
+const EXCLUDED_PATHS = new Set(['assets/screenshot.png']);
 
 function argValue(name, fallback) {
   const i = process.argv.indexOf(name);
@@ -87,6 +89,7 @@ function collectPayload(rel = '') {
     if (entry.isDirectory() && EXCLUDED_DIRS.has(entry.name)) continue;
     if (entry.isFile() && EXCLUDED_FILES.test(entry.name)) continue;
     const next = rel ? rel + '/' + entry.name : entry.name;
+    if (EXCLUDED_PATHS.has(next)) continue;
     if (entry.isDirectory()) out.push(...collectPayload(next));
     else out.push(next);
   }
