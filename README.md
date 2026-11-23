@@ -8,7 +8,11 @@ PiWork 的文件查看器，也是 Office / PDF 的编辑器和生成器：文�
 
 ## PiWork 中的文档处理
 
-![PiWork 中的文档处理](./media/demo.gif)
+![PiWork 里的文件查看器](./assets/screenshot.png)
+
+下面的演示里，先预览 Markdown 与 CSV，再让 agent 按 SKU 汇总生成 xlsx 报表。
+
+![文档处理演示](./media/demo.gif)
 
 ## 能做什么
 

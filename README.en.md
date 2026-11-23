@@ -8,7 +8,11 @@ The file viewer in PiWork, and also the editor and generator for Office / PDF do
 
 ## Document processing in PiWork
 
-![Document processing in PiWork](./media/demo.gif)
+![The File Viewer in PiWork](./assets/screenshot.png)
+
+In the demo below, Markdown and CSV are previewed first, then the agent summarizes by SKU and generates an xlsx report.
+
+![Document processing demo](./media/demo.gif)
 
 ## What it does
 
