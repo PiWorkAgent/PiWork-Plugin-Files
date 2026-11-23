@@ -9,7 +9,7 @@
  *
  * The zip contains the RUNTIME PAYLOAD only — manifest, dist/, ui-dist/, ui/,
  * assets/ (README screenshots excluded), docs/, PLUGIN.md. src/ tests/ scripts/
- * vendor/ node_modules/ are build inputs and never ship.
+ * vendor/ node_modules/ and the README-only media/ never ship.
  *
  * The zip URL is ABSOLUTE and pinned to the release tag
  * (`https://github.com/<owner>/<repo>/releases/download/v<version>/<zip>`), so
@@ -34,7 +34,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 /** Build inputs, never read at runtime. */
-const EXCLUDED_DIRS = new Set(['node_modules', 'src', 'tests', 'scripts', 'vendor', 'dist-packages']);
+const EXCLUDED_DIRS = new Set(['node_modules', 'src', 'tests', 'scripts', 'vendor', 'media', 'dist-packages']);
 const EXCLUDED_FILES = /^(\.DS_Store|package-lock\.json|pnpm-lock\.yaml|tsconfig.*\.json|.*\.tsbuildinfo)$/;
 /** README-only assets: kept in git, never shipped in the runtime zip. */
 const EXCLUDED_PATHS = new Set(['assets/screenshot.png']);
